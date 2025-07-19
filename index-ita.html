@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TextQuestEngine – Documentazione Ufficiale</title>
+  <meta name="description" content="TextQuestEngine: motore Python per creare avventure testuali modulari ed estensibili. Installazione, CLI, demo e API.">
+  <meta name="keywords" content="TextQuestEngine, text adventure, Python, CLI, plugin, YAML, JSON, PyInstaller">
+  <meta name="author" content="Luca Bocaletto">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="TextQuestEngine – Documentazione Ufficiale">
+  <meta property="og:description" content="Guida completa all’installazione e all’uso di TextQuestEngine, il motore per avventure testuali in Python.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://github.com/bocaletto-luca/TextQuestEngine">
+  <meta property="og:image" content="https://raw.githubusercontent.com/bocaletto-luca/TextQuestEngine/main/assets/og-image.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TextQuestEngine – Documentazione Ufficiale">
+  <meta name="twitter:description" content="Guida completa all’installazione e all’uso di TextQuestEngine.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/bocaletto-luca/TextQuestEngine/main/assets/og-image.png">
+
+  <!-- JSON-LD structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "TextQuestEngine – Documentazione Ufficiale",
+    "description": "TextQuestEngine: motore Python per creare avventure testuali modulari ed estensibili.",
+    "author": {
+      "@type": "Person",
+      "name": "Luca Bocaletto"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GitHub",
+      "url": "https://github.com/bocaletto-luca/TextQuestEngine"
+    },
+    "url": "https://github.com/bocaletto-luca/TextQuestEngine"
+  }
+  </script>
+
+  <link rel="canonical" href="https://github.com/bocaletto-luca/TextQuestEngine">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>TextQuestEngine</h1>
+    <p>Motore Python per avventure testuali modulari ed estensibili</p>
+    <p><strong>Autore:</strong> Luca Bocaletto • <strong>Licenza:</strong> GNU GPL v3.0</p>
+    <nav>
+      <ul>
+        <li><a href="#overview">Panoramica</a></li>
+        <li><a href="#installazione">Installazione</a></li>
+        <li><a href="#uso">Uso</a></li>
+        <li><a href="#cli">Comandi CLI</a></li>
+        <li><a href="#struttura">Struttura</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#api">API</a></li>
+        <li><a href="#packaging">Packaging</a></li>
+        <li><a href="#contribuire">Contribuire</a></li>
+        <li><a href="#licenza">Licenza</a></li>
+      </ul>
+    </nav>
+    <hr>
+  </header>
+
+  <main>
+    <section id="overview">
+      <h2>Panoramica</h2>
+      <p>TextQuestEngine è un framework Python per creare e distribuire <em>text adventure</em> professionali. Unisce un parser multilingue, un dispatcher ad eventi, un loader YAML/JSON e un sistema di plugin per customizzare ogni aspetto del gioco.</p>
+    </section>
+
+    <section id="installazione">
+      <h2>Installazione</h2>
+      <ol>
+        <li>Clona il repo:
+          <pre><code>git clone https://github.com/bocaletto-luca/TextQuestEngine.git</code></pre>
+        </li>
+        <li>Crea e attiva ambiente virtuale:
+          <pre><code>python3 -m venv .venv
+source .venv/bin/activate</code></pre>
+        </li>
+        <li>Installa in modalità editable:
+          <pre><code>pip install -e .</code></pre>
+        </li>
+        <li>Installa PyInstaller (opzionale):
+          <pre><code>pip install pyinstaller</code></pre>
+        </li>
+      </ol>
+    </section>
+
+    <section id="uso">
+      <h2>Uso di Base</h2>
+      <p>Il comando principale è <code>tqe</code> (alias <code>python3 -m engine.utils.cli</code>), che gestisce tutte le fasi del ciclo di vita della tua avventura.</p>
+    </section>
+
+    <section id="cli">
+      <h2>Comandi CLI</h2>
+      <ul>
+        <li><strong>init &lt;nome&gt;</strong>: scaffolding nuovo progetto.</li>
+        <li><strong>run --world &lt;file&gt;</strong>: esecuzione interattiva.</li>
+        <li><strong>test</strong>: esegue pytest.</li>
+        <li><strong>lint</strong>: controlla stile (flake8, pylint).</li>
+        <li><strong>build</strong>: genera sdist &amp; wheel.</li>
+        <li><strong>package</strong>: crea un eseguibile con PyInstaller.</li>
+      </ul>
+    </section>
+
+    <section id="struttura">
+      <h2>Struttura del Progetto</h2>
+      <pre><code>TextQuestEngine/
+├── engine/
+│   ├── core/           # dispatcher, game loop, parser, CLI commands
+│   ├── data/           # loader world, modelli di Room/Item/NPC/Mission
+│   ├── plugins/        # base PluginBase
+│   └── utils/          # entrypoint CLI
+├── demo_adventure/     # demo “La Grotta Perduta”
+│   ├── config/         # world.yaml, items.json
+│   ├── plugins/        # light_plugin.py
+│   └── assets/         # map.txt, ASCII art
+├── src/                # wrapper per packaging
+│   └── main.py
+├── setup.py
+└── README.md</code></pre>
+    </section>
+
+    <section id="demo">
+      <h2>Demo “La Grotta Perduta”</h2>
+      <p>La demo mostra stanze, oggetti, NPC, missioni e un plugin per il buio.</p>
+      <h3>world.yaml</h3>
+      <pre><code>config:
+  start_room: casa
+  start_time: 0
+  intro_text: "Sei un esploratore…"
+  initial_missions:
+    - missione_gemma
+    - missione_birra
+
+rooms:
+  casa: { name: "Casa Abbandonata", desc: "Sul tavolo brilla una torcia.", connections: { fuori: foresta }, items: [torcia] }
+  foresta: { name: "Bosco Spettinato", desc: "...", connections: { indietro: casa, dentro: grotta }, items: [] }
+  grotta:  { name: "Grotta Buia", desc: "...", connections: { fuori: foresta }, items: [] }
+  taverna:{ name: "Taverna del Ghiro", desc: "...", connections: { fuori: casa }, items: [birra] }
+
+npcs:
+  gnomo_fannullone: { name: "Gnomo Fannullone", location: taverna, dialogues: [...] }
+
+missions:
+  missione_gemma: { title: "La Gemma Luccicante", requirements: { have_item: [gemma] }, steps: [...], rewards: { xp:50, message:"…!" } }
+  missione_birra:  { title: "Porta la Birra", requirements: { have_item: [birra] }, steps: [...], rewards: { xp:20, message:"…!" } }</code></pre>
+      <h3>items.json</h3>
+      <pre><code>{
+  "torcia": { "names":["torcia"], "description":"Torcia a batteria…", "weight":1.0, "usable_on":["grotta"] },
+  "gemma":  { "names":["gemma"],  "description":"Gemma splendente…", "weight":0.2, "usable_on":[] },
+  "birra":  { "names":["birra"],  "description":"Pinta di birra…", "weight":0.5, "usable_on":["gnomo_fannullone"] }
+}</code></pre>
+      <h3>Plugin <code>light_plugin.py</code></h3>
+      <pre><code>from engine.plugins.base import PluginBase
+class LightPlugin(PluginBase):
+    def on_pre_action(self, a,s,w):
+        if a.command=="look" and s["current_room"]=="grotta" and not s.get("torch_lit"):
+            return "È troppo buio…"
+    def on_command_use(self, a,s,w):
+        if a.target=="torcia":
+            s["torch_lit"]=True
+            w.rooms["grotta"].items.append("gemma")
+            return "Hai acceso la torcia!"
+        return None</code></pre>
+    </section>
+
+    <section id="api">
+      <h2>API Principali</h2>
+      <dl>
+        <dt><code>load_world(path)</code></dt>
+        <dd>Carica YAML+JSON e restituisce un <code>World</code>.</dd>
+        <dt><code>Game(world)</code></dt>
+        <dd>Loop principale con parser e dispatcher.</dd>
+        <dt><code>EventDispatcher</code></dt>
+        <dd>Gestisce eventi core e plugin.</dd>
+        <dt><code>PluginBase</code></dt>
+        <dd>Classe base per creare plugin con metodi on_*.</dd>
+      </dl>
+    </section>
+
+    <section id="packaging">
+      <h2>Packaging Standalone</h2>
+      <pre><code>pip install pyinstaller
+tqe package</code></pre>
+      <p>Il binario, <code>config/</code> e <code>assets/</code> saranno in <code>dist/</code>.</p>
+    </section>
+
+    <section id="contribuire">
+      <h2>Contribuire</h2>
+      <ol>
+        <li>Forka il repo</li>
+        <li>Crea branch <code>feature/…</code></li>
+        <li>Testa con <code>tqe test</code> e <code>tqe lint</code></li>
+        <li>Aggiungi documentazione e PR</li>
+      </ol>
+    </section>
+
+    <section id="licenza">
+      <h2>Licenza</h2>
+      <p>Rilasciato sotto <strong>GNU GPL v3.0</strong>. Vedi <code>LICENSE</code>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <hr>
+    <p>&copy; 2025 Luca Bocaletto. Documentazione sotto GNU GPL v3.0.</p>
+  </footer>
+
+</body>
+</html>
