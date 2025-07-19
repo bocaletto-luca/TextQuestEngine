@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "textquestengine"
+version = "0.1.0"
+description = "Motore Python professionale per avventure testuali in terminale"
+readme = "README.md"
+authors = [
+  { name="Bocaletto Luca", email="autore@example.com" }
+]
+license = { file="LICENSE" }
+requires-python = ">=3.7"
+dependencies = [
+  "PyYAML>=5.3.1",
+  "colorama>=0.4.4"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
