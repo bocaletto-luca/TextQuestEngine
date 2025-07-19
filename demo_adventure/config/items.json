@@ -1,0 +1,14 @@
+{
+  "torcia": {
+    "names": ["torcia", "lanterna"],
+    "description": "Una torcia funzionante. Puoi usarla per illuminare luoghi bui.",
+    "weight": 1.0,
+    "usable_on": ["grotta"]
+  },
+  "gemma": {
+    "names": ["gemma", "pietra preziosa"],
+    "description": "Una splendida gemma incastonata nella parete della grotta.",
+    "weight": 0.2,
+    "usable_on": []
+  }
+}
