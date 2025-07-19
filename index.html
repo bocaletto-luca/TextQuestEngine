@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>TextQuestEngine – Complete Documentation</title>
+  <meta name="description" content="TextQuestEngine: a Python framework for modular, extensible, standalone text adventures. Full guide: installation, usage, architecture, plugins, packaging.">
+  <meta name="keywords" content="TextQuestEngine, text adventure, Python, CLI, plugin, YAML, JSON, PyInstaller, guide">
+  <meta name="author" content="Luca Bocaletto">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TextQuestEngine – Complete Documentation">
+  <meta property="og:description" content="Official guide to installing, using, extending and packaging TextQuestEngine, your Python text‐adventure engine.">
+  <meta property="og:url" content="https://github.com/bocaletto-luca/TextQuestEngine">
+  <meta property="og:image" content="https://raw.githubusercontent.com/bocaletto-luca/TextQuestEngine/main/assets/og-image.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TextQuestEngine – Complete Documentation">
+  <meta name="twitter:description" content="Official guide to installing, using, extending and packaging TextQuestEngine.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/bocaletto-luca/TextQuestEngine/main/assets/og-image.png">
+
+  <!-- JSON-LD structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "TextQuestEngine – Complete Documentation",
+    "description": "Installation, usage, API reference and extension guide for TextQuestEngine, a Python text adventure framework.",
+    "author": {
+      "@type": "Person",
+      "name": "Luca Bocaletto"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GitHub",
+      "url": "https://github.com/bocaletto-luca/TextQuestEngine"
+    },
+    "url": "https://github.com/bocaletto-luca/TextQuestEngine"
+  }
+  </script>
+
+  <link rel="canonical" href="https://github.com/bocaletto-luca/TextQuestEngine">
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; line-height:1.6; }
+    header, nav, main, footer { padding: 1rem; }
+    nav ul { list-style:none; margin:0; padding:0; }
+    nav li { display:inline; margin-right:1rem; }
+    pre { background:#f4f4f4; padding:0.5rem; overflow-x:auto; }
+    code { font-family:monospace; }
+    table { width:100%; border-collapse:collapse; margin:1rem 0; }
+    th, td { border:1px solid #ddd; padding:0.5rem; text-align:left; }
+    h2,h3,h4 { margin-top:2rem; }
+    hr { border:none; border-bottom:1px solid #ccc; margin:1rem 0; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>TextQuestEngine</h1>
+    <p>A Python framework for modular, extensible, standalone text adventures.</p>
+    <p><strong>Author:</strong> Luca Bocaletto • <strong>License:</strong> GNU GPL v3.0</p>
+    <nav>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#quickstart">Quickstart</a></li>
+        <li><a href="#cli">CLI</a></li>
+        <li><a href="#structure">Project Structure</a></li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#architecture">Core Architecture</a></li>
+        <li><a href="#plugins">Plugins</a></li>
+        <li><a href="#extension">Extension</a></li>
+        <li><a href="#packaging">Packaging</a></li>
+        <li><a href="#ci">CI/CD</a></li>
+        <li><a href="#demo">Demo Walkthrough</a></li>
+        <li><a href="#contributing">Contributing</a></li>
+        <li><a href="#license">License</a></li>
+      </ul>
+    </nav>
+    <hr>
+  </header>
+
+  <main>
+    <!-- Overview -->
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>TextQuestEngine is an open‐source Python framework for creating text adventures quickly, with modularity and extensibility in mind. It features:</p>
+      <ul>
+        <li>Multilingual command parser with synonyms</li>
+        <li>Event‐driven dispatcher and hookable plugin system</li>
+        <li>World loader from YAML + JSON files</li>
+        <li>Data models for rooms, items, NPCs, and missions</li>
+        <li>CLI utilities for scaffolding, development, testing, and packaging</li>
+      </ul>
+    </section>
+
+    <!-- Installation -->
+    <section id="installation">
+      <h2>Installation</h2>
+      <p><strong>Requirements:</strong> Python 3.8+, pip, (optional) PyInstaller.</p>
+      <ol>
+        <li>Clone the repository:
+          <pre><code>git clone https://github.com/bocaletto-luca/TextQuestEngine.git</code></pre>
+        </li>
+        <li>Create and activate a virtual environment:
+          <pre><code>cd TextQuestEngine
+python3 -m venv .venv
+source .venv/bin/activate</code></pre>
+        </li>
+        <li>Install in editable mode:
+          <pre><code>pip install -e .</code></pre>
+        </li>
+        <li>(Optional) Install PyInstaller for standalone packaging:
+          <pre><code>pip install pyinstaller</code></pre>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Quickstart -->
+    <section id="quickstart">
+      <h2>Quickstart</h2>
+      <p>Scaffold and run a new adventure in seconds:</p>
+      <pre><code>tqe init my_adventure
+cd my_adventure
+tqe run</code></pre>
+      <p>This creates:</p>
+      <ul>
+        <li><code>config/</code> with <code>world.yaml</code> and <code>items.json</code></li>
+        <li><code>assets/</code> folder (for art, maps, etc.)</li>
+        <li><code>plugins/</code> folder (initially empty)</li>
+      </ul>
+    </section>
+
+    <!-- CLI -->
+    <section id="cli">
+      <h2>Command-Line Interface</h2>
+      <table>
+        <thead>
+          <tr><th>Command</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>tqe init &lt;name&gt;</code></td><td>Generate project scaffold</td></tr>
+          <tr><td><code>tqe run [--world path]</code></td><td>Launch interactive game</td></tr>
+          <tr><td><code>tqe test</code></td><td>Run unit & integration tests (pytest)</td></tr>
+          <tr><td><code>tqe lint</code></td><td>Check code style and quality</td></tr>
+          <tr><td><code>tqe build</code></td><td>Build sdist & wheel distributions</td></tr>
+          <tr><td><code>tqe package</code></td><td>Create standalone executable (PyInstaller)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Project Structure -->
+    <section id="structure">
+      <h2>Project Structure</h2>
+      <pre><code>TextQuestEngine/
+├── engine/
+│   ├── core/
+│   │   ├── dispatcher.py
+│   │   ├── game.py
+│   │   ├── parser.py
+│   │   └── cli_commands.py
+│   ├── data/
+│   │   ├── loader.py
+│   │   └── models.py
+│   ├── plugins/
+│   │   └── base.py
+│   └── utils/
+│       └── cli.py
+├── demo_adventure/
+│   ├── config/
+│   │   ├── world.yaml
+│   │   └── items.json
+│   ├── plugins/
+│   │   └── light_plugin.py
+│   └── assets/
+│       └── map.txt
+├── src/
+│   └── main.py
+├── setup.py
+└── README.md</code></pre>
+    </section>
+
+    <!-- Configuration -->
+    <section id="configuration">
+      <h2>Configuration (world.yaml & items.json)</h2>
+      <h3>world.yaml</h3>
+      <p>Top‐level <code>config</code> block accepts:</p>
+      <ul>
+        <li><code>start_room</code>: ID of the starting room</li>
+        <li><code>start_time</code>: starting time in minutes (default 0)</li>
+        <li><code>intro_text</code>: welcome message shown on launch</li>
+        <li><code>initial_missions</code>: list of mission IDs to activate at start</li>
+      </ul>
+      <p>Example:</p>
+      <pre><code>config:
+  start_room: house
+  start_time: 0
+  intro_text: >
+    You are an explorer seeking epic adventures… and epic puns.
+  initial_missions:
+    - mission_gem
+    - mission_beer
+
+rooms:
+  house:
+    name: Abandoned House
+    desc: A dusty old house with a torch on the table.
+    connections:
+      outside: forest
+    items:
+      - torch
+  <!-- more rooms, NPCs, missions… --></code></pre>
+
+      <h3>items.json</h3>
+      <p>Each item entry:</p>
+      <ul>
+        <li><code>names</code>: array of synonyms</li>
+        <li><code>description</code>: text description</li>
+        <li><code>weight</code>: numeric weight</li>
+        <li><code>usable_on</code>: array of room or NPC IDs</li>
+      </ul>
+      <pre><code>{
+  "torch": {
+    "names": ["torch", "lantern"],
+    "description": "Battery-powered torch for lighting dark areas.",
+    "weight": 1.0,
+    "usable_on": ["cave"]
+  },
+  "gem": { … },
+  "beer": { … }
+}</code></pre>
+    </section>
+
+    <!-- Core Architecture -->
+    <section id="architecture">
+      <h2>Core Architecture</h2>
+      <h3>Parser</h3>
+      <p><code>engine/core/parser.py</code> converts user input into an <code>Action</code>:</p>
+      <pre><code>class Action(NamedTuple):
+    command: str
+    target: Optional[str]
+    indirect: Optional[str]
+
+class Parser:
+    def parse(self, line: str, state: dict, world: World) -> Action:
+        # tokenize, map synonyms, resolve targets…
+        return Action(command, target, indirect)</code></pre>
+
+      <h3>Dispatcher</h3>
+      <p><code>engine/core/dispatcher.py</code> handles:</p>
+      <ul>
+        <li><code>subscribe(event, callback)</code> to hook <code>pre_action</code>, <code>command_<cmd></code>, <code>post_action</code></li>
+        <li><code>emit(event,…)</code> to fire plugin callbacks</li>
+        <li><code>dispatch(action,…)</code> to run plugin hooks then core commands</li>
+      </ul>
+      <pre><code>dispatcher.subscribe("command_use", my_hook)
+output = dispatcher.dispatch(action, state, world)</code></pre>
+
+      <h3>Game Loop</h3>
+      <p><code>engine/core/game.py</code> orchestrates:</p>
+      <ol>
+        <li>Load plugins from <code>plugins/</code></li>
+        <li>Initialize <code>state</code>: current_room, inventory, missions, time</li>
+        <li>Print <code>intro_text</code></li>
+        <li>Loop: read input → <code>pre_action</code> → <code>dispatch</code> → mission checks → print output → <code>post_action</code></li>
+      </ol>
+
+      <h3>Data Models</h3>
+      <ul>
+        <li><code>Room</code>: id, name, desc, connections, items, <code>describe()</code></li>
+        <li><code>Item</code>: id, names, description, weight, usable_on</li>
+        <li><code>NPC</code>: id, name, location, dialogues</li>
+        <li><code>Mission</code>: id, title, description, requirements, steps, rewards</li>
+        <li><code>World</code>: holds rooms, items, npcs, missions, start_room_id, start_time, initial_missions, intro_text</li>
+      </ul>
+    </section>
+
+    <!-- Plugins -->
+    <section id="plugins">
+      <h2>Plugin System</h2>
+      <p>Plugins extend engine behavior by subscribing to events:</p>
+      <ul>
+        <li><code>pre_action</code>: before any command</li>
+        <li><code>command_<cmd></code>: intercept a specific command</li>
+        <li><code>post_action</code>: after command execution</li>
+      </ul>
+      <h3>Sample Plugin</h3>
+      <pre><code>from engine.plugins.base import PluginBase
+
+class MyPlugin(PluginBase):
+    def on_pre_action(self, action, state, world):
+        if action.command == "look":
+            return "MyPlugin: you look around?"
+
+    def on_command_use(self, action, state, world):
+        if action.target == "key":
+            return "You used a magic key!"</code></pre>
+    </section>
+
+    <!-- Extension -->
+    <section id="extension">
+      <h2>Extending the Engine</h2>
+      <h3>Custom Commands</h3>
+      <p>Subscribe directly in dispatcher:</p>
+      <pre><code>dispatcher.subscribe("command_dance", lambda a,s,w: "You bust a move!")</code></pre>
+
+      <h3>Parser Extensions</h3>
+      <p>Override <code>Parser.parse()</code> for new syntax or macros.</p>
+
+      <h3>Custom World Loader</h3>
+      <p>Replace <code>load_world()</code> to read JSON, database, or API sources.</p>
+    </section>
+
+    <!-- Packaging -->
+    <section id="packaging">
+      <h2>Standalone Packaging</h2>
+      <p>To create a single‐file executable without Python installed:</p>
+      <pre><code>tqe package</code></pre>
+      <p>Includes <code>config/</code> and <code>assets/</code> automatically. Output in <code>dist/</code>.</p>
+    </section>
+
+    <!-- CI/CD -->
+    <section id="ci">
+      <h2>CI/CD Example</h2>
+      <p>Here’s a GitHub Actions workflow snippet:</p>
+      <pre><code>name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with: python-version: '3.x'
+      - run: python3 -m venv .venv
+      - run: . .venv/bin/activate
+      - run: pip install -e .[dev]
+      - run: pytest -q
+      - run: flake8 .</code></pre>
+    </section>
+
+    <!-- Demo Walkthrough -->
+    <section id="demo">
+      <h2>Demo Walkthrough</h2>
+      <p>The <code>demo_adventure/</code> folder contains “The Lost Cave” example. Steps:</p>
+      <ol>
+        <li><code>cd demo_adventure</code> &amp; <code>tqe run</code></li>
+        <li><code>look</code> – describe current room</li>
+        <li><code>take torch</code> – pick up the torch</li>
+        <li><code>move inside</code> – enter a dark cave (blocked by plugin)</li>
+        <li><code>use torch</code> – light torch & spawn gem</li>
+        <li><code>look</code> – now see the gem</li>
+        <li><code>take gem</code> – complete the mission</li>
+      </ol>
+    </section>
+
+    <!-- Contributing -->
+    <section id="contributing">
+      <h2>Contributing</h2>
+      <ol>
+        <li>Fork the repository on GitHub</li>
+        <li>Create a feature branch (<code>feature/your-feature</code>)</li>
+        <li>Make changes and test with <code>tqe test</code> & <code>tqe lint</code></li>
+        <li>Submit a Pull Request</li>
+      </ol>
+    </section>
+
+    <!-- License -->
+    <section id="license">
+      <h2>License</h2>
+      <p>This project is licensed under the <strong>GNU GPL v3.0</strong>. See the <code>LICENSE</code> file for details.</p>
+    </section>
+  </main>
+
+  <footer>
+    <hr>
+    <p>&copy; 2023–2025 Luca Bocaletto. Document released under GNU GPL v3.0.</p>
+  </footer>
+
+</body>
+</html>
