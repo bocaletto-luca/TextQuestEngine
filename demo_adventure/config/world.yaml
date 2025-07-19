@@ -1,0 +1,106 @@
+# demo_adventure/config/world.yaml
+
+config:
+  start_room: casa
+  start_time: 0           # parte da 0 minuti (0h 0m)
+  intro_text: >
+    Sei un esploratore in cerca di avventure epiche… e di battute epicamente stupide.
+    Se riesci a mantenere un sorriso mentre rischi la pelle, sei nel posto giusto!
+  initial_missions:
+    - missione_gemma
+    - missione_birra
+
+rooms:
+
+  casa:
+    name: Casa Abbandonata
+    desc: >
+      Una casetta polverosa piena di mobili arrugginiti e misteriosi
+      stranioggetti. Sul tavolo, una torcia luccica come un sole in miniatura.
+    connections:
+      fuori: foresta
+    items:
+      - torcia
+
+  foresta:
+    name: Bosco Spettinato
+    desc: >
+      Gli alberi sembrano farsi i capelli a vicenda. Un sentiero tortuoso
+      porta verso una grotta misteriosa, ma occhio alle radici dispettose.
+    connections:
+      indietro: casa
+      dentro: grotta
+    items: []
+
+  grotta:
+    name: Grotta Buia (e Scherzosa)
+    desc: >
+      È così buia che persino le tue idee più brillanti fanno fatica a vedersi.
+      Forse ti serve qualcosa di luminoso… o almeno un comico che illumini l’atmosfera.
+    connections:
+      fuori: foresta
+    items: []
+
+  taverna:
+    name: Taverna del Ghiro
+    desc: >
+      Un modesto locale in cui ogni cliente dorme nel proprio bicchiere.
+      Il bancone è pieno di bottiglie, la maggior parte vuote… proprio come le speranze di un tentativo di economia.
+    connections:
+      fuori: casa
+    items:
+      - birra
+
+npcs:
+
+  gnomo_fannullone:
+    name: Gnomo Fannullone
+    location: taverna
+    dialogues:
+      - text: "Oh, ciao viandante! Se hai una birra, potremmo chiamarla ‘amicizia’."
+        options:
+          - reply: "Ecco la birra"
+            text: "Ah, finalmente! Ecco un applauso per te… *fa un sonoro rumore di starnuto*"
+            next: fine
+          - reply: "No, ho una gemma"
+            text: "Una gemma? Va bene lo stesso, ne so poco di gemme, ma ne ho una spiacevole sensazione."
+            next: fine
+      - text: "Hai fatto qualcosa di eroico ultimamente?"
+        options:
+          - reply: "Ho recuperato la gemma nella grotta"
+            text: "Wow, un vero eroe! Oppure un incosciente. In ogni caso, ti offro una pinta in omaggio."
+            next: fine
+      - text: "fine"
+        options: []
+
+missions:
+
+  missione_gemma:
+    title: "La Gemma Luccicante"
+    description: >
+      La leggenda narra di una gemma preziosa nascosta nel vortice di tenebre
+      nella Grotta Buia. Trovala e riportala alla luce… e al Gnomo Fannullone!
+    requirements:
+      have_item: ["gemma"]
+    steps:
+      - "Entra nella grotta buia"
+      - "Accendi la torcia"
+      - "Prendi la gemma"
+      - "Riporta la gemma al Gnomo Fannullone"
+    rewards:
+      xp: 50
+      message: "Hai illuminato la grotta… e il senso dell’umorismo di un gnomo!"
+
+  missione_birra:
+    title: "Porta la Birra"
+    description: >
+      Il Gnomo Fannullone è assetato di storie e… di birra. Trova una pinta e portagliela.
+    requirements:
+      have_item: ["birra"]
+    steps:
+      - "Trova una birra"
+      - "Vai alla taverna"
+      - "Dai la birra al Gnomo Fannullone"
+    rewards:
+      xp: 20
+      message: "Il gnomo ora dorme beato. Missione compiuta!"
